@@ -1,0 +1,21 @@
+DATABASE CREATION
+import sqlite3 def checkSetup():
+conn = sqlite3.connect('library_administration.db') cursor = conn.cursor()
+cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='admin'")
+result = cursor.fetchone() conn.close()
+if result is None: return False
+return True
+
+def setup():
+conn = sqlite3.connect('library_administration.db') cursor = conn.cursor()
+create_admin_table = """
+CREATE TABLE IF NOT EXISTS admin ( "id"  TEXT NOT NULL,
+"name"	TEXT NOT NULL,
+"password" TEXT NOT NULL, "secQuestion" TEXT NOT NULL, "secAnswer"  TEXT NOT NULL,
+"Phone"	INTEGER NOT NULL CHECK(10), "City" TEXT NOT NULL
+); """
+create_books_table = """
+CREATE TABLE IF NOT EXISTS books ( "Book_Id"	INTEGER NOT NULL UNIQUE,
+"Book_name" TEXT NOT NULL, "Author"	TEXT NOT NULL,
+"Availiability" BOOLEAN NOT NULL, PRIMARY KEY("Book_Id")
+);
