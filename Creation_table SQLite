@@ -1,0 +1,23 @@
+create_issue_table = """
+CREATE TABLE IF NOT EXISTS issue ( "BID"  INTEGER NOT NULL,
+"SID"  INTEGER NOT NULL,
+"Issue_date" DATE NOT NULL, "Return_date" DATE NOT NULL, PRIMARY KEY("BID","SID"),
+FOREIGN KEY("BID") REFERENCES "books"("Book_Id"),
+FOREIGN KEY("SID") REFERENCES "students"("Student_Id")
+); """
+
+
+
+create_students_table = """
+CREATE TABLE IF NOT EXISTS students ( "Roll_no"	INTEGER NOT NULL UNIQUE,
+"name"	TEXT NOT NULL, "Student_Id" INTEGER NOT NULL UNIQUE, "class" INTEGER NOT NULL,
+"Phone_number" INTEGER NOT NULL CHECK(10), "Books_Issued"	INTEGER NOT NULL DEFAULT 0, "Fine" INTEGER NOT NULL DEFAULT 0,
+PRIMARY KEY("Student_Id","Roll_no")
+); """
+
+cursor.execute(create_admin_table) cursor.execute(create_books_table) cursor.execute(create_issue_table) cursor.execute(create_students_table) conn.commit()
+conn.close()
+
+
+def getConnection():
+return sqlite3.connect('library_administration.db')
